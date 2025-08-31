@@ -21,10 +21,7 @@ import (
 
 func main() {
 	// godotenv.Load()
-	err := godotenv.Load()
-	if err != nil {
-		log.Fatal("error loading env", err)
-	}
+	_ = godotenv.Load()
 
 	cfg := config.LoadConfig()
 	dsn := fmt.Sprintf(

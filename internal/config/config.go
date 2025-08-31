@@ -27,9 +27,9 @@ func LoadConfig() Config {
 		DbUser:     getOrDefaultEnv("DB_USER", "fx-exchange"),
 		DbPassword: getOrDefaultEnv("DB_PASSWORD", "fx-exchange"),
 		Auth: jwt.Auth{
-			Issuer:               getOrDefaultEnv("JWT_ISSUER", "project-delta.com"),
-			Audience:             getOrDefaultEnv("JWT_AUDIENCE", "poject-delta"),
-			Secret:               getOrDefaultEnv("JWT_SECRET", "project-delta-jwt-secret"),
+			Issuer:               getOrDefaultEnv("JWT_ISSUER", "fx-exchange.com"),
+			Audience:             getOrDefaultEnv("JWT_AUDIENCE", "fx-exchange"),
+			Secret:               getOrDefaultEnv("JWT_SECRET", "fx-exchange-jwt-secret"),
 			TokenExpireAt:        time.Minute * 15,
 			RefreshTokenExpireAt: time.Hour * 4,
 		},

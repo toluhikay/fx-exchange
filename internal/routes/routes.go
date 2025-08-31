@@ -77,6 +77,7 @@ func (r *RouteConfig) SetUpRoutes() http.Handler {
 
 	mux.Route("/api/wallets", func(mux chi.Router) {
 		mux.Use(r.customMiddleware.AuthRequired)
+		// todo - add rate limiter middleware
 		mux.Post("/", handler.CreateWallet)
 		mux.Get("/", handler.GetWallet)
 		mux.Post("/deposit", handler.Deposit)

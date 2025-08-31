@@ -207,10 +207,10 @@ func (r *Repository) Transfer(ctx context.Context, senderID, receiverID, fromCur
 		}
 		switch id {
 		case senderID:
-			senderWallet = models.Wallet{ID: id, Balances: balances}
+			senderWallet = models.Wallet{Balances: balances}
 			foundSender = true
 		case receiverID:
-			receiverWallet = models.Wallet{ID: id, Balances: balances}
+			receiverWallet = models.Wallet{Balances: balances}
 			foundReceiver = true
 		}
 	}

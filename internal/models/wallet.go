@@ -31,11 +31,11 @@ type Transaction struct {
 	ID              string    `json:"id"`
 	WalletID        string    `json:"wallet_id"`
 	Type            string    `json:"type"`
-	FromCurrency    string    `json:"from_currency"`
-	ToCurrency      string    `json:"to_currency"`
-	Amount          float64   `json:"amount"`
-	ConvertedAmount float64   `json:"converted_amount"`
-	Rate            float64   `json:"rate"`
+	FromCurrency    *string   `json:"from_currency"`
+	ToCurrency      *string   `json:"to_currency"`
+	Amount          *float64  `json:"amount"`
+	ConvertedAmount *float64  `json:"converted_amount"`
+	Rate            *float64  `json:"rate"`
 	Timestamp       time.Time `json:"timestamp"`
 }
 

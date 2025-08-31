@@ -6,7 +6,6 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/go-chi/chi/v5"
 	"github.com/toluhikay/fx-exchange/internal/models"
 	"github.com/toluhikay/fx-exchange/internal/services"
 	"github.com/toluhikay/fx-exchange/pkg/jwt"
@@ -113,15 +112,30 @@ func (h *Handler) Swap(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
-	h.logAudit(r, walletID)
-	json.NewEncoder(w).Encode(map[string]interface{}{
+	// h.logAudit(r, walletID)
+
+	data := map[string]any{
 		"converted_amount": convertedAmount,
 		"rate":             rate,
-	})
+	}
+
+	jsonResponse := utils.JSONResponse{
+		Error:   false,
+		Data:    data,
+		Message: "success",
+	}
+
+	utils.WriteJson(w, http.StatusAccepted, jsonResponse)
 }
 
 func (h *Handler) Transfer(w http.ResponseWriter, r *http.Request) {
-	walletID := chi.URLParam(r, "walletID")
+	userClaims := r.Context().Value("user_claims").(*jwt.JwtClaims)
+	wallet, err := h.svc.GetWalletByUserId(r.Context(), userClaims.ID)
+	if err != nil {
+		http.Error(w, "Invalid request", http.StatusBadRequest)
+		return
+	}
+	walletID := wallet.ID
 	var req models.TransferRequest
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		http.Error(w, "Invalid request", http.StatusBadRequest)
@@ -132,22 +146,44 @@ func (h *Handler) Transfer(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
-	h.logAudit(r, walletID)
-	json.NewEncoder(w).Encode(map[string]interface{}{
+	// h.logAudit(r, walletID)
+
+	data := map[string]any{
 		"converted_amount": convertedAmount,
 		"rate":             rate,
-	})
+	}
+
+	jsonResponse := utils.JSONResponse{
+		Error:   false,
+		Data:    data,
+		Message: "success",
+	}
+
+	utils.WriteJson(w, http.StatusAccepted, jsonResponse)
 }
 
 func (h *Handler) GetTransactionHistory(w http.ResponseWriter, r *http.Request) {
-	walletID := chi.URLParam(r, "walletID")
+	userClaims := r.Context().Value("user_claims").(*jwt.JwtClaims)
+	wallet, err := h.svc.GetWalletByUserId(r.Context(), userClaims.ID)
+	if err != nil {
+		http.Error(w, "Invalid request", http.StatusBadRequest)
+		return
+	}
+	walletID := wallet.ID
 	transactions, err := h.svc.GetTransactionHistory(r.Context(), walletID)
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
-	h.logAudit(r, walletID)
-	json.NewEncoder(w).Encode(transactions)
+	// h.logAudit(r, walletID)
+
+	jsonResponse := utils.JSONResponse{
+		Error:   false,
+		Data:    transactions,
+		Message: "success",
+	}
+
+	utils.WriteJson(w, http.StatusAccepted, jsonResponse)
 }
 
 func (h *Handler) logAudit(r *http.Request, walletID string) {
@@ -169,5 +205,12 @@ func (h *Handler) GetBalances(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	// h.logAudit(r, walletID, "get_balances", "")
-	json.NewEncoder(w).Encode(balances)
+
+	jsonResponse := utils.JSONResponse{
+		Error:   false,
+		Data:    balances,
+		Message: "success",
+	}
+
+	utils.WriteJson(w, http.StatusAccepted, jsonResponse)
 }

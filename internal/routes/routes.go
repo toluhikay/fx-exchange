@@ -3,7 +3,6 @@ package routes
 import (
 	"context"
 	"database/sql"
-	"fmt"
 	"net/http"
 	"os"
 
@@ -45,8 +44,6 @@ func (r *RouteConfig) SetUpRoutes() http.Handler {
 	} else {
 		r.fxProvider = fx.NewFXClient()
 	}
-
-	fmt.Println("fx provider", r.fxProvider)
 
 	svc := services.NewService(repo, r.fxProvider)
 	userSvc := services.NewUserService(*userRepo)

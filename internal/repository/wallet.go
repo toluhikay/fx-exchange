@@ -53,11 +53,11 @@ func (r *Repository) CreateWallet(ctx context.Context, email string, user_id uui
 	}, nil
 }
 
-func (r *Repository) GetWallet(ctx context.Context, userId string) (*models.Wallet, error) {
-	query := `SELECT id, email, user_id, balances, created_at FROM wallets WHERE user_id = $1`
+func (r *Repository) GetWallet(ctx context.Context, Id string) (*models.Wallet, error) {
+	query := `SELECT id, email, user_id, balances, created_at FROM wallets WHERE id = $1`
 	var balancesJSON []byte
 	var wallet models.Wallet
-	err := r.db.QueryRowContext(ctx, query, userId).Scan(&wallet.ID, &wallet.EmailOrMobile, wallet.UserId, &balancesJSON, &wallet.CreatedAt)
+	err := r.db.QueryRowContext(ctx, query, Id).Scan(&wallet.ID, &wallet.EmailOrMobile, &wallet.UserId, &balancesJSON, &wallet.CreatedAt)
 	if err != nil {
 		return nil, fmt.Errorf("failed to get wallet: %w", err)
 	}

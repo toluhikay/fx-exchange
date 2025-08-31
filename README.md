@@ -2,7 +2,7 @@
 
 ## Overview
 
-Operation Borderless is a fintech platform for managing digital wallets with multiple stablecoin balances. This backend, built in Go with a PostgreSQL database, powers the core functionality, serving a React + Tailwind CSS frontend (`github.com/toluhikay/fx-exchange-frontend`). It supports user registration and login (JWT-based authentication), wallet creation, deposits, swaps, transfers between wallets, transaction history, and viewing balances with their USD equivalent. The backend is deployed on Railway with auto-deployment from GitHub (`github.com/toluhikay/fx-exchange`) and uses a manually configured PostgreSQL database via Beekeeper Studio. It’s designed for security, scalability, and compliance, with audit logging for all operations.
+Operation Borderless is a fintech platform for managing digital wallets with multiple stablecoin balances. This backend, built in Go with a PostgreSQL database, powers the core functionality, serving a React + Tailwind CSS frontend (`github.com/toluhikay/fx-exchange-front`). It supports user registration and login (JWT-based authentication), wallet creation, deposits, swaps, transfers between wallets, transaction history, and viewing balances with their USD equivalent. The backend is deployed on Railway with auto-deployment from GitHub (`github.com/toluhikay/fx-exchange`) and uses a manually configured PostgreSQL database via Beekeeper Studio. It’s designed for security, scalability, and compliance, with audit logging for all operations.
 
 ## Features
 
